@@ -1,13 +1,12 @@
+import dotenv from 'dotenv';
 import 'dotenv/config';
 import express from 'express';
 import Student from './models/contacts.js';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import pino from 'pino-http';
 import cors from 'cors';
-import dotenv from 'dotenv';
 
 import { getContactById, getContacts } from './services/contacts.js';
-import Contact from './models/contacts.js';
 
 const PORT = 3000;
 
