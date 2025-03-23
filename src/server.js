@@ -1,22 +1,19 @@
 import 'dotenv/config';
 import express from 'express';
 import contactRoutes from './routers/contacts.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 const PORT = 3000;
 const app = express();
 const router = express.Router();
 
 export const setupServer = () => {
-  router.use('/contacts', contactRoutes);
+  app.use('/contacts', contactRoutes);
 
-  router.use((req, res, next) => {
-    res.status(404).send('Not found');
-  });
+  app.use(notFoundHandler);
 
-  router.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something not');
-  });
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Mongo connection successfully established!`);
