@@ -7,7 +7,7 @@ const contactSchema = new mongoose.Schema(
       required: true,
     },
     phoneNumber: {
-      type: Number,
+      type: String,
       requred: true,
     },
     email: {
@@ -24,14 +24,6 @@ const contactSchema = new mongoose.Schema(
       requared: true,
       enum: ['work', 'home', 'personal'],
       derault: 'personal',
-    },
-    createdAt: {
-      type: String,
-      requared: false,
-    },
-    updatedAt: {
-      type: String,
-      requared: false,
     },
   },
   {
