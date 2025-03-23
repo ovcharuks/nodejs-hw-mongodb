@@ -19,13 +19,11 @@ export const setupServer = () => {
 
   app.use((req, res, next) => {
     res.status(404).send('Not found');
-    next();
   });
 
   app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something not');
-    next();
   });
 
   app.listen(PORT, () => {
