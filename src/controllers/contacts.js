@@ -75,7 +75,7 @@ export const updateContactController = async (req, res) => {
   if (result === null) {
     throw new createHttpError.NotFound('Contact not found');
   }
-  res.json({
+  res.status(200).json({
     status: 200,
     message: 'Successfully patched a contact!',
     data: result,
