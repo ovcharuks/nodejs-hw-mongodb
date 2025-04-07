@@ -22,8 +22,9 @@ export const getContacts = async (req, res) => {
     sortBy,
     sortOrder,
     filter,
-    userId: req.userId,
+    userId: req.user.id,
   });
+  console.log('req');
   res.json({
     status: 200,
     message: 'Successfully found contacts!',

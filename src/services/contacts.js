@@ -5,12 +5,13 @@ export const getAllContacts = async ({
   perPage,
   sortBy,
   sortOrder,
-  // filter = {},
+  filter = {},
   userId,
 }) => {
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
   const contactQuery = Contact.find({ userId });
+  console.log(userId);
 
   // if (filter.type) {
   //   contactQuery.where('type').equals(filter.type);
