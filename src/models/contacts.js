@@ -25,6 +25,10 @@ const contactSchema = new mongoose.Schema(
       enum: ['work', 'home', 'personal'],
       derault: 'personal',
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      requared: true,
+    },
   },
   {
     timestamps: true,

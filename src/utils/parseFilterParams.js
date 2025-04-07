@@ -23,6 +23,6 @@ export const parseFilterParams = (query) => {
 
   return {
     type: parsedContactType,
-    ipFavorite: parsedIsFavourite,
+    isFavourite: parsedIsFavourite,
   };
 };

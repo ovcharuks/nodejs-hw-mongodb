@@ -11,6 +11,8 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { contactSchema, updateContactSchema } from '../validation/contact.js';
+import { authenticate } from '../middlewares/authenticate.js';
+
 const router = express.Router();
 
 const jsonParser = express.json();
@@ -44,4 +46,6 @@ router.patch(
   ctrlWrapper(updateContactController),
 );
 
+router.use(authenticate);
+// router.get('/', ctrlWrapper(getContacts));
 export default router;
