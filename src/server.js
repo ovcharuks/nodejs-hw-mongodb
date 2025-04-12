@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import router from './routes/index.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = 3000;
 const app = express();
@@ -20,6 +21,8 @@ export const setupServer = () => {
   app.use(notFoundHandler);
 
   app.use(errorHandler);
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.listen(PORT, () => {
     console.log(`Mongo connection successfully established!`);

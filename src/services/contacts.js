@@ -54,24 +54,6 @@ export const createContact = async (contact, userId) => {
   return Contact.create({ ...contact, userId });
 };
 
-// export const replaceContact = async (contactId, contact) => {
-//   const result = await Contact.findByIdAndUpdate(contactId, contact, {
-//     new: true,
-//     upsert: true,
-//     includeResultMetadata: true,
-//   });
-//   return {
-//     value: result.value,
-//     updatedExisting: result.lastErrorObject.updatedExisting,
-//   };
-// };
-
-// export const updateContact = async (contactId, contact, userId) => {
-//   return Contact.findOneAndUpdate({ _id: contactId, userId }, contact, {
-//     new: true,
-//   });
-// };
-
 export const updateContact = async (filter, payload, options = {}) => {
   const rawResult = await Contact.findOneAndUpdate(filter, payload, {
     new: true,
