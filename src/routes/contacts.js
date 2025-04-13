@@ -25,6 +25,7 @@ router.delete('/:id', isValidId, ctrlWrapper(deleteContactController));
 
 router.post(
   '/',
+  upload.single('photo'),
   jsonParser,
   validateBody(contactSchema),
   ctrlWrapper(createContactController),
@@ -33,6 +34,7 @@ router.post(
 router.put(
   '/:id',
   isValidId,
+  upload.single('photo'),
   jsonParser,
   validateBody(contactSchema),
   ctrlWrapper(replaceContactController),
@@ -41,27 +43,10 @@ router.put(
 router.patch(
   '/:id',
   isValidId,
+  upload.single('photo'),
   jsonParser,
   validateBody(updateContactSchema),
   ctrlWrapper(updateContactController),
 );
 
-router.put(
-  '/:studentId',
-  // checkRoles(ROLES.TEACHER),
-  isValidId,
-  upload.single('photo'),
-  validateBody(updateContactSchema),
-  ctrlWrapper(replaceContactController),
-);
-
-router.patch(
-  '/:studentId',
-  // checkRoles(ROLES.TEACHER, ROLES.PARENT),
-  isValidId,
-  upload.single('photo'),
-  validateBody(updateContactSchema),
-  ctrlWrapper(replaceContactController),
-);
-// router.get('/', ctrlWrapper(getContacts));
 export default router;

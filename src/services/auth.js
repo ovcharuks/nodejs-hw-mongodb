@@ -129,16 +129,16 @@ export const requestResetToken = async (email) => {
     from: getEnvVar(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+    html,
   });
 };
 
 export const resetPassword = async (payload) => {
   let entries;
-
   try {
     entries = jwt.verify(payload.token, getEnvVar('JWT_SECRET'));
   } catch (err) {
+    console.log(err);
     if (err instanceof Error) throw createHttpError(401, err.message);
     throw err;
   }
