@@ -35,3 +35,21 @@ responses:
               $ref: '../../../components/schemas/.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
+  '404':
+    description: Contact not found
+    content:
+      aplication/json:
+        schema:
+          type: object
+          required: -status
+            -message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Student not found
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

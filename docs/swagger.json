@@ -171,9 +171,8 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "_id",
-                  "contactType",
-                  "userId"
+                  "isFavourite",
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -195,15 +194,10 @@
                       "personal"
                     ]
                   },
-                  "id": {
-                    "description": "Contact's id",
-                    "type": "number",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
-                  "userId": {
-                    "description": "Contact's user id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
+                  "isFavourite": {
+                    "description": "Contact's favourite",
+                    "type": "boolean",
+                    "example": true
                   },
                   "photo": {
                     "description": "Student's photo",
@@ -307,6 +301,31 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Contact not found",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "required": "-status -message",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Student not found"
+                    }
+                  }
+                }
+              }
+            },
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -314,9 +333,9 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Modify contacts by id",
+        "summary": "Update contact by id",
         "operationId": "patchContact",
-        "description": "Modify contact by id",
+        "description": "Update contact by id",
         "security": [
           {
             "bearerAuth": []
@@ -329,39 +348,59 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
+              "example": "67f24579c88bd1471149b7ca"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Get student by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found contact with id 65ca67e7ae7f10c88b598384!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/"
-                    }
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Contact's name",
+                    "type": "string",
+                    "example": "Kateryna Povalenko"
+                  },
+                  "phoneNumber": {
+                    "description": "Contact's phone number",
+                    "type": "string",
+                    "example": "+380000000005"
+                  },
+                  "email": {
+                    "description": "Contact's email",
+                    "type": "string",
+                    "example": "kateryna.pov5@example.com"
+                  },
+                  "isFavourite": {
+                    "description": "Whether is contact on favourites",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "contactType": {
+                    "description": "Contact's type",
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ],
+                    "example": "personal"
+                  },
+                  "photo": {
+                    "description": "Contact's photo",
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
             }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Modify contact"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -372,9 +411,9 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Remove contacts by id",
-        "operationId": "deleteContact",
-        "description": "Remove contact by id",
+        "summary": "Delete contact by id",
+        "operationId": "deletContact",
+        "description": "Delete contact by id",
         "security": [
           {
             "bearerAuth": []
@@ -387,39 +426,13 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
+              "example": "67f24579c88bd1471149b7ca"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Removed student by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 204
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully delete contact with id 65ca67e7ae7f10c88b598384!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Delete contact"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -562,6 +575,30 @@
                       "example": "Access token expired"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ServerError"
                 }
               }
             }
