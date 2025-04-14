@@ -1,3 +1,4 @@
+//index.js
 import path from 'node:path';
 
 export const FIFTEEN_MINUTES = 150 * 60 * 1000;
